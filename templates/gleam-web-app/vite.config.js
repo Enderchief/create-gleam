@@ -20,14 +20,18 @@ export default defineConfig({
     {
       name: "vite-gleam",
       handleHotUpdate(ctx) {
-        // console.log(ctx.file);
         if (path.join(__dirname, "src").includes(path.join(ctx.file, ".."))) {
           console.log("$ gleam build");
           const out = execSync("gleam build");
           console.log(out.toString("utf-8"));
         }
       },
-      async resolveId(source, importer, options) {
+      buildStart() {
+        console.log("$ gleam build");
+        const out = execSync("gleam build");
+        console.log(out.toString("utf-8"));
+      },
+      async resolveId(source, importer) {
         if (gleamRegex.test(source)) {
           return {
             id: path.join(importer, "../", source).replace(gleamRegex, ".mjs"),

@@ -5,6 +5,7 @@
     "lib": ["DOM", "ESNext"],
     "paths": {
       "@assets/*": ["./assets/*"]
-    }
+    },
+    "rootDirs": ["src", "build/dev/javascript/sample_project"]
   }
 }

@@ -6,8 +6,11 @@
 
 ```
 ├── .gitignore      // list of files/folders hidden by git
-├── assets          // location of static/nonjs files (images, css)
+├── assets          // location of static/nonjs files to be (images, css). can be imported/compiled
 │   └── main.css
+├── public          // location of static files served on the root of the site (ex: `example.com/image.svg`)
+│   └── gleam.svg
+│   └── vite.svg
 ├── gleam.toml      // no need to edit
 ├── index.html      // modify as you wish, keep script tag
 ├── package.json    // reference node packages and used to run commands

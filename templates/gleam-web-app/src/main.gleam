@@ -46,14 +46,10 @@ pub fn main() {
 }
 
 fn onclick() {
-  select("#count")
-  |> update(
-    "innerText",
-    fn(old) {
-      case int.parse(old) {
-        Ok(v) -> int.to_string(v + 1)
-        Error(_) -> old
-      }
-    },
-  )
+  use old <- update(select("#count"), "innerText")
+
+  case int.parse(old) {
+    Ok(v) -> int.to_string(v + 1)
+    Error(_) -> old
+  }
 }
