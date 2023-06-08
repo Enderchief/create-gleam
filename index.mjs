@@ -140,7 +140,15 @@ async function main() {
   const pkgJsonPath = path.join(root, "package.json");
   const pkg = JSON.parse(fs.readFileSync(pkgJsonPath, "utf8"));
   pkg.name = projectName;
-  fs.writeFileSync(pkgJsonPath, JSON.stringify(pkg));
+  fs.writeFileSync(pkgJsonPath, JSON.stringify(pkg, null, 2));
+
+  let html = fs.readFileSync(path.join(root, "index.html"), "utf-8");
+  html = html.replace("{{NAME}}", projectName);
+  fs.writeFileSync(path.join(root, "index.html"), html)
+
+  let gleamToml = fs.readFileSync(path.join(root, "gleam.toml"), "utf-8");
+  gleamToml = gleamToml.replace("{{NAME}}", projectName);
+  fs.writeFileSync(path.join(root, "gleam.toml"), gleamToml)
 
   console.log(bold(`Project scaffolded at ${root}`));
   console.log(

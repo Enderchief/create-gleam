@@ -1,4 +1,4 @@
-name = "sample" # if you change this, make sure to update the path in `index.html`
+name = "{{NAME}}"
 version = "0.1.0"
 description = "a web project"
 
