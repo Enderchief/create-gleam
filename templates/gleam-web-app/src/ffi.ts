@@ -1,10 +1,19 @@
-export function randInt(max: number) {
-  return Math.ceil(Math.random() * max);
+export function eventListener(
+  element: HTMLElement,
+  event: keyof HTMLElementEventMap,
+  handler: VoidFunction,
+) {
+  element.addEventListener(event, handler);
 }
 
-export function mathy(x: number, y: number) {
-  return 2 ** y + x;
+export function select(tag: string) {
+  return document.querySelector(tag);
 }
 
-export function counter() {
+export function update(
+  elem: HTMLElement,
+  attr: string,
+  updater: (old: string) => string,
+) {
+  elem[attr] = updater(elem[attr]);
 }

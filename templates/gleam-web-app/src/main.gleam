@@ -1,20 +1,59 @@
-import gleam/io
 import gleam/int
 
-pub external fn randint(max: Int) -> Int =
-  "./ffi.ts" "randInt"
+pub external type HtmlElement
 
-pub external fn mathy(x: Int, y: Int) -> Int =
-  "./ffi.ts" "mathy"
+pub external fn event_listener(
+  element: HtmlElement,
+  event: String,
+  handler: fn() -> Nil,
+) -> Nil =
+  "./ffi.ts" "eventListener"
+
+pub external fn select(selector: String) -> HtmlElement =
+  "./ffi.ts" "select"
+
+pub external fn update(
+  elem: HtmlElement,
+  attr: String,
+  updater: fn(String) -> String,
+) -> Nil =
+  "./ffi.ts" "update"
 
 pub fn main() {
-  io.println("Hello from ts_gleam!")
-  let x = randint(100)
-  let y = randint(500)
+  select("#app")
+  |> update(
+    "innerHTML",
+    fn(_) {
+      "<div>
+    <a href='https://vitejs.dev' target='_blank'>
+      <img src='/vite.svg' class='logo' alt='Vite logo' />
+    </a>
+    <a href='https://gleam.run' target='_blank'>
+      <img src='/gleam.svg' class='logo gleam' alt='Gleam logo' />
+    </a>
+    <h1>Vite + Gleam</h1>
+    <div class='card'>
+      <button id='counter' type='button'>Count is: <span id='count'>0</span></button>
+    </div>
+    <p class='read-the-docs'>
+      Click on the Vite and Gleam logos to learn more
+    </p>
+  </div>"
+    },
+  )
 
-  io.println("x = " <> int.to_string(x) <> ", y = " <> int.to_string(y))
+  event_listener(select("#counter"), "click", onclick)
+}
 
-  let res = mathy(x, y)
-
-  io.println("result = " <> int.to_string(res))
+fn onclick() {
+  select("#count")
+  |> update(
+    "innerText",
+    fn(old) {
+      case int.parse(old) {
+        Ok(v) -> int.to_string(v + 1)
+        Error(_) -> old
+      }
+    },
+  )
 }
