@@ -1,0 +1,25 @@
+{
+    "name": "create-gleam",
+    "bin": {
+        "create-gleam": "index.mjs"
+    },
+    "description": "scaffold a web app with gleam and vite",
+    "devDependencies": {
+        "kolorist": "^1.8.0",
+        "prompts": "^2.4.2"
+    },
+    "type": "module",
+    "files": [
+        "templates",
+        "index.mjs"
+    ],
+    "author": "endercheif",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/endercheif/create-gleam.git"
+    },
+    "keywords": [
+        "gleam"
+    ]
+}
