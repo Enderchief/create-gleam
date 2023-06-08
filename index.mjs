@@ -142,7 +142,7 @@ async function main() {
   pkg.name = projectName;
   fs.writeFileSync(pkgJsonPath, JSON.stringify(pkg));
 
-  console.log(bold(`Project scaffolded at ${templateDir}`));
+  console.log(bold(`Project scaffolded at ${root}`));
   console.log(
     `Run:
     cd ${root.replace(process.cwd(), ".")}
