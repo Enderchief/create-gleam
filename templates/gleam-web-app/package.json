@@ -9,7 +9,6 @@
     "preview": "vite preview"
   },
   "keywords": [],
-  "author": "endercheif",
   "license": "MIT",
   "dependencies": {
     "vite": "^4.0.4"
