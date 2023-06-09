@@ -2,10 +2,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import prompts from "prompts";
-import { cyan, red, reset } from "kolorist";
-import { white } from "kolorist";
-import { bold } from "kolorist";
-import { gray } from "kolorist";
+import { bold, cyan, gray, red, reset } from "kolorist";
 
 /**
  * @param {fs.PathLike} path
@@ -54,6 +51,15 @@ function copy(src, dest) {
   } else {
     fs.copyFileSync(src, dest);
   }
+}
+
+/**
+ * @param {fs.PathOrFileDescriptor} path
+ * @param {(initial: string) => string} fn
+ */
+function update(path, fn) {
+    const file = fs.readFileSync(path, {encoding: 'utf-8'});
+    fs.writeFileSync(path, fn(file))
 }
 
 const templates = [
@@ -117,7 +123,9 @@ async function main() {
 
   const root = path.join(process.cwd(), targetDir);
 
+  /** @type { {projectName: string, overwrite: boolean, template: string} } */
   const { projectName, overwrite, template } = res;
+  const name = projectName.toLowerCase().replaceAll("-", "_");
 
   if (overwrite) {
     emptyDir(root);
@@ -126,7 +134,6 @@ async function main() {
   }
 
   const templateDir = path.resolve(
-    // @ts-ignore
     path.join(import.meta.url.slice(7), "../templates/"),
     template,
   );
@@ -137,18 +144,26 @@ async function main() {
     copy(path.join(templateDir, file), targetPath);
   }
 
-  const pkgJsonPath = path.join(root, "package.json");
-  const pkg = JSON.parse(fs.readFileSync(pkgJsonPath, "utf8"));
-  pkg.name = projectName;
-  fs.writeFileSync(pkgJsonPath, JSON.stringify(pkg, null, 2));
+  update(path.join(root, 'package.json'), file => {
+    let f = JSON.parse(file);
+    f.name = name;
+    return JSON.stringify(f, null, 2);
+  })
 
-  let html = fs.readFileSync(path.join(root, "index.html"), "utf-8");
-  html = html.replace("{{NAME}}", projectName);
-  fs.writeFileSync(path.join(root, "index.html"), html)
+  update(path.join(root, 'index.html'), file => {
+    return file.replaceAll("{{NAME}}", name);
+  })
+  
+  update(path.join(root, 'gleam.toml'), file => {
+    return file.replaceAll("{{NAME}}", name);
+  })
 
-  let gleamToml = fs.readFileSync(path.join(root, "gleam.toml"), "utf-8");
-  gleamToml = gleamToml.replace("{{NAME}}", projectName);
-  fs.writeFileSync(path.join(root, "gleam.toml"), gleamToml)
+  update(path.join(root, 'tsconfig.json'), file => {
+    let f = JSON.parse(file);
+    f.rootDirs[1] = `build/dev/javascript/${name}`;
+    return JSON.stringify(f, null, 2);
+  })
+
 
   console.log(bold(`Project scaffolded at ${root}`));
   console.log(
