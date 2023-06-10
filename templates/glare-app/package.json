@@ -1,5 +1,5 @@
 {
-  "name": "{{NAME}}",
+  "name": "glare-app",
   "version": "1.0.0",
   "description": "A starter template for creating a web app with Vite + TypeScript + Gleam",
   "main": "index.js",

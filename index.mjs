@@ -1,8 +1,19 @@
 #!/usr/bin/env node
 import fs from "node:fs";
+import fss from "node:fs/promises";
 import path from "node:path";
 import prompts from "prompts";
-import { bold, cyan, gray, red, reset } from "kolorist";
+import {
+  blue,
+  bold,
+  cyan,
+  gray,
+  lightBlue,
+  lightRed,
+  magenta,
+  red,
+  reset,
+} from "kolorist";
 
 /**
  * @param {fs.PathLike} path
@@ -54,72 +65,89 @@ function copy(src, dest) {
 }
 
 /**
- * @param {fs.PathOrFileDescriptor} path
+ * @param {string} path
  * @param {(initial: string) => string} fn
  */
-function update(path, fn) {
-    const file = fs.readFileSync(path, {encoding: 'utf-8'});
-    fs.writeFileSync(path, fn(file))
+async function update(path, fn) {
+  if (!fs.existsSync(path)) return;
+  const file = await fss.readFile(path, { encoding: "utf-8" });
+  await fss.writeFile(path, fn(file));
 }
 
 const templates = [
   {
     name: "gleam-web-app",
     description: "a basic gleam web app",
+    color: magenta,
+  },
+  {
+    name: "glare-app",
+    description: "template using Glare (SolidJS)",
     color: cyan,
+  },
+  {
+    name: "lustre-app",
+    description: "template using Lustre (ReactJS)",
+    color: blue,
   },
 ];
 
 async function main() {
   let targetDir = "sample_project";
 
-  const res = await prompts(
-    [
-      {
-        type: "text",
-        name: "projectName",
-        message: reset("Project name:"),
-        onState(state) {
-          targetDir = state.value || "sample_project";
+  let res;
+  try {
+    res = await prompts(
+      [
+        {
+          type: "text",
+          name: "projectName",
+          message: reset("Project name:"),
+          onState(state) {
+            targetDir = state.value || "sample_project";
+          },
+          initial: "sample_project",
         },
-        initial: "sample_project",
-      },
-      {
-        type: () =>
-          !fs.existsSync(targetDir) || isEmpty(targetDir) ? null : "confirm",
-        name: "overwrite",
-        message: () =>
-          (targetDir === "."
-            ? "Current directory"
-            : `Target directory "${targetDir}"`) +
-          ` is not empty. Remove existing files and continue?`,
-      },
-      {
-        type: (_, { overwrite }) => {
-          if (overwrite === false) {
-            throw new Error(red("✖") + " Operation cancelled");
-          }
-          return null;
+        {
+          type: () =>
+            !fs.existsSync(targetDir) || isEmpty(targetDir) ? null : "confirm",
+          name: "overwrite",
+          message: () =>
+            (targetDir === "."
+              ? "Current directory"
+              : `Target directory "${targetDir}"`) +
+            ` is not empty. Remove existing files and continue?`,
         },
-        name: "overwriteChecker",
-      },
+        {
+          type: (_, { overwrite }) => {
+            if (overwrite === false) {
+              throw new Error(red("✖") + " Operation cancelled");
+            }
+            return null;
+          },
+          name: "overwriteChecker",
+        },
+        {
+          type: "select",
+          name: "template",
+          message: reset("Select a template to scaffold your project"),
+          choices: templates.map((template) => ({
+            title: template.color(template.name),
+            description: template.description,
+            value: template.name,
+          })),
+        },
+      ],
       {
-        type: "select",
-        name: "template",
-        message: reset("Select a template to scaffold your project"),
-        choices: templates.map((template) => ({
-          title: template.color(template.name),
-          description: template.description,
-          value: template.name,
-        })),
+        onCancel() {
+          throw new Error(red("✖") + " Operation cancelled");
+        },
       },
-    ],
-    {
-      onCancel() {
-        throw new Error(red("✖") + " Operation cancelled");
-      },
-    },
-  );
+    );
+  } catch (e) {
+    console.error(e.message);
+    process.exit(1);
+  }
 
   const root = path.join(process.cwd(), targetDir);
 
@@ -144,26 +172,19 @@ async function main() {
     copy(path.join(templateDir, file), targetPath);
   }
 
-  update(path.join(root, 'package.json'), file => {
-    let f = JSON.parse(file);
-    f.name = name;
-    return JSON.stringify(f, null, 2);
-  })
-
-  update(path.join(root, 'index.html'), file => {
-    return file.replaceAll("{{NAME}}", name);
-  })
-  
-  update(path.join(root, 'gleam.toml'), file => {
-    return file.replaceAll("{{NAME}}", name);
-  })
-
-  update(path.join(root, 'tsconfig.json'), file => {
-    let f = JSON.parse(file);
-    f.rootDirs[1] = `build/dev/javascript/${name}`;
-    return JSON.stringify(f, null, 2);
-  })
-
+  await Promise.all(
+    [
+      "package.json",
+      "index.html",
+      "gleam.toml",
+      "tsconfig.json",
+    ].map(
+      (p) =>
+        update(path.join(root, p), (file) => {
+          return file.replaceAll("{{NAME}}", name);
+        }),
+    ),
+  );
 
   console.log(bold(`Project scaffolded at ${root}`));
   console.log(

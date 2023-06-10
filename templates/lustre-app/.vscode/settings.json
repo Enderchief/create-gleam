@@ -1,0 +1,9 @@
+{
+  "files.exclude": {
+    "build": true,
+    "node_modules": true,
+    ".vscode": true,
+    "manifest.toml": true,
+    "global.d.ts": true
+  }
+}

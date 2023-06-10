@@ -2,7 +2,7 @@
   "compilerOptions": {
     "checkJs": true,
     "lib": [
-        "esnext"
+      "esnext"
     ],
     "module": "NodeNext"
   }

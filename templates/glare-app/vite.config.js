@@ -14,6 +14,10 @@ export default defineConfig({
     sourcemap: true,
     target: "esnext",
   },
+  esbuild: {
+    keepNames: true,
+    minifyIdentifiers: false,
+  },
   plugins: [
     {
       name: "vite-gleam",
