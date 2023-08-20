@@ -12,6 +12,6 @@
   "license": "MIT",
   "dependencies": {
     "vite": "^4.0.4",
-    "vite-gleam": "^0.2.3"
+    "vite-gleam": "^0.2.2"
   }
 }
