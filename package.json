@@ -3,7 +3,7 @@
   "bin": {
     "create-gleam": "index.mjs"
   },
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "scaffold a web app with gleam and vite",
   "dependencies": {
     "kolorist": "^1.8.0",
