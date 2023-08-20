@@ -42,7 +42,11 @@ fn render(state) {
             [img([src("/vite.svg"), class("logo"), alt("Vite logo")])],
           ),
           a(
-            [href("https://gleam.run"), target("_blank"), rel("noreferrer")],
+            [
+              href("https://hexdocs.pm/lustre/3.0.0-rc.8/index.html"),
+              target("_blank"),
+              rel("noreferrer"),
+            ],
             [img([src("/gleam.svg"), class("logo gleam"), alt("Gleam logo")])],
           ),
           h1([], [text("Vite + Lustre")]),
