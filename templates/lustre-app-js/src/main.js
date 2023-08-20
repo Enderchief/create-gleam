@@ -1,5 +1,5 @@
 import "@assets/main.css";
 
-import { main } from "./main.gleam";
+import { main } from "./app.gleam";
 
 document.addEventListener("DOMContentLoaded", main)

@@ -32,7 +32,7 @@ fn update(state, msg) {
 
 fn render(state) {
   div(
-    [id("root")],
+    [id("app")],
     [
       div(
         [],

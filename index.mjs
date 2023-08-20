@@ -8,8 +8,7 @@ import {
   bold,
   cyan,
   gray,
-  lightBlue,
-  lightRed,
+  yellow,
   magenta,
   red,
   reset,
@@ -86,9 +85,14 @@ const templates = [
     color: cyan,
   },
   {
-    name: "lustre-app",
-    description: "template using Lustre (ReactJS)",
+    name: "lustre-app-ts",
+    description: "template using Lustre + TypeScript",
     color: blue,
+  },
+  {
+    name: "lustre-app-js",
+    description: "template using Lustre + JavaScript",
+    color: yellow,
   },
 ];
 
