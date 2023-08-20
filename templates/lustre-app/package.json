@@ -10,8 +10,7 @@
   "keywords": [],
   "license": "MIT",
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "vite-gleam": "^0.2.2",
     "vite": "^4.0.4"
   }
 }

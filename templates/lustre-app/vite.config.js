@@ -1,8 +1,6 @@
-import { execSync } from "node:child_process";
 import * as path from "node:path";
 import { defineConfig } from "vite";
-
-const gleamRegex = /\.(gleam)$/;
+import gleam from "vite-gleam";
 
 export default defineConfig({
   resolve: {
@@ -12,30 +10,6 @@ export default defineConfig({
   },
   build: {
     sourcemap: true,
-    target: "esnext",
   },
-  plugins: [
-    {
-      name: "vite-gleam",
-      handleHotUpdate(ctx) {
-        if (path.join(__dirname, "src").includes(path.join(ctx.file, ".."))) {
-          console.log("$ gleam build");
-          const out = execSync("gleam build");
-          console.log(out.toString("utf-8"));
-        }
-      },
-      buildStart() {
-        console.log("$ gleam build");
-        const out = execSync("gleam build");
-        console.log(out.toString("utf-8"));
-      },
-      async resolveId(source, importer) {
-        if (gleamRegex.test(source)) {
-          return {
-            id: path.join(importer, "../", source).replace(gleamRegex, ".mjs"),
-          };
-        }
-      },
-    },
-  ],
+  plugins: [gleam()],
 });

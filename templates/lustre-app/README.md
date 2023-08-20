@@ -10,16 +10,14 @@
 │   └── main.css
 ├── public          // location of static files served on the root of the site (ex: `example.com/image.svg`)
 │   └── gleam.svg
-│   └── react.svg
 │   └── vite.svg
 ├── gleam.toml      // no need to edit
 ├── index.html      // modify as you wish, keep script tag
 ├── package.json    // reference node packages and used to run commands
 ├── README.md
 ├── src             // location of your actual program, do stuff here
-│   ├── entry.ts    // entry point referenced by index.html
-│   ├── global.d.ts // allows typescript to import from `.gleam`
-│   └── main.gleam
+│   ├── main.ts     // entry point referenced by index.html
+│   └── app.gleam
 ├── tsconfig.json   // settings for typescript
 └── vite.config.js  // settings for vite
 ```

@@ -2,4 +2,4 @@ import "@assets/main.css";
 
 import { main } from "./main.gleam";
 
-main();
+document.addEventListener("DOMContentLoaded", main)
