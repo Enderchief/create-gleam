@@ -8,5 +8,5 @@ target = "javascript"
 typescript_declarations = true
 
 [dependencies]
-gleam_stdlib = "~> 0.29"
+gleam_stdlib = "~> 0.30"
 

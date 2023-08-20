@@ -11,6 +11,7 @@
   "keywords": [],
   "license": "MIT",
   "dependencies": {
-    "vite": "^4.0.4"
+    "vite": "^4.0.4",
+    "vite-gleam": "^0.2.2"
   }
 }

@@ -1,23 +1,23 @@
 import gleam/int
 
-pub external type HtmlElement
+pub type HtmlElement
 
-pub external fn event_listener(
-  element: HtmlElement,
-  event: String,
-  handler: fn() -> Nil,
-) -> Nil =
-  "./ffi.ts" "eventListener"
+@external(javascript, "./ffi.ts", "eventListener")
+pub fn event_listener(
+  element element: HtmlElement,
+  event event: String,
+  handler handler: fn() -> Nil,
+) -> Nil
 
-pub external fn select(selector: String) -> HtmlElement =
-  "./ffi.ts" "select"
+@external(javascript, "./ffi.ts", "select")
+pub fn select(selector selector: String) -> HtmlElement
 
-pub external fn update(
-  elem: HtmlElement,
-  attr: String,
-  updater: fn(String) -> String,
-) -> Nil =
-  "./ffi.ts" "update"
+@external(javascript, "./ffi.ts", "update")
+pub fn update(
+  elem elem: HtmlElement,
+  attr attr: String,
+  updater updater: fn(String) -> String,
+) -> Nil
 
 pub fn main() {
   select("#app")

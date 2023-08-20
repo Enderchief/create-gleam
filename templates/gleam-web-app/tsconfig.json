@@ -6,6 +6,7 @@
     "paths": {
       "@assets/*": ["./assets/*"]
     },
-    "rootDirs": ["src", "build/dev/javascript/{{NAME}}"]
-  }
+    "rootDirs": ["src", "build/dev/javascript/{{NAME}}"],
+    "allowArbitraryExtensions": true
+    }
 }
