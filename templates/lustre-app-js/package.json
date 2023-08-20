@@ -1,8 +1,7 @@
 {
   "name": "{{NAME}}",
   "version": "1.0.0",
-  "description": "A starter template for creating a web app with Vite + TypeScript + Gleam",
-  "main": "index.js",
+  "description": "A starter template for creating a web app with Lustre + Gleam + JavaScript",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -11,7 +10,7 @@
   "keywords": [],
   "license": "MIT",
   "dependencies": {
-    "vite": "^4.0.4",
-    "vite-gleam": "^0.2.3"
+    "vite-gleam": "^0.2.3",
+    "vite": "^4.0.4"
   }
 }

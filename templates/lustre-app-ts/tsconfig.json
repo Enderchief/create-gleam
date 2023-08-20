@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "declaration": true,
+    "lib": ["DOM", "ESNext"],
+    "paths": {
+      "@assets/*": ["./assets/*"]
+    },
+    "rootDirs": ["src", "build/dev/javascript/{{NAME}}"],
+    "allowArbitraryExtensions": true
+    }
+}

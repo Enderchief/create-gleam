@@ -8,7 +8,7 @@ import lustre/attribute.{alt, class, href, id, rel, src, target}
 
 pub fn main() {
   let app = lustre.simple(init, update, render)
-  let assert Ok(_) = lustre.start(app, "div")
+  let assert Ok(_) = lustre.start(app, "#app")
 
   Nil
 }
@@ -32,7 +32,7 @@ fn update(state, msg) {
 
 fn render(state) {
   div(
-    [id("root")],
+    [id("app")],
     [
       div(
         [],
@@ -42,7 +42,11 @@ fn render(state) {
             [img([src("/vite.svg"), class("logo"), alt("Vite logo")])],
           ),
           a(
-            [href("https://gleam.run"), target("_blank"), rel("noreferrer")],
+            [
+              href("https://hexdocs.pm/lustre/index.html"),
+              target("_blank"),
+              rel("noreferrer"),
+            ],
             [img([src("/gleam.svg"), class("logo gleam"), alt("Gleam logo")])],
           ),
           h1([], [text("Vite + Lustre")]),

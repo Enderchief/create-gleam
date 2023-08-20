@@ -1,0 +1,19 @@
+{
+  "name": "sample_project",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "A starter template for creating a web app with Lustre + Gleam + JavaScript",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "license": "MIT",
+  "dependencies": {
+    "vite": "^4.0.4"
+  },
+  "devDependencies": {
+    "vite-gleam": "^0.2.2"
+  }
+}

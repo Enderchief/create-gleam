@@ -10,7 +10,7 @@
   "keywords": [],
   "license": "MIT",
   "dependencies": {
-    "vite-gleam": "^0.2.2",
+    "vite-gleam": "^0.2.3",
     "vite": "^4.0.4"
   }
 }
